@@ -14,5 +14,15 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+jwt:
+  secret: 511cb518-99c3-458d-8b26-42246d4ba381.ed52da13-aaf0-4a64-aee7-541f09290321.e6581b01-3cf6-414a-939b-b24ca8241735
+  lifetime: 3600000
 
+logging:
+  level:
+    com.cherniak.simpleuserservice: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 

@@ -9,7 +9,7 @@ import lombok.*;
 @Table(name = "profile_addresses")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProfileAddress {

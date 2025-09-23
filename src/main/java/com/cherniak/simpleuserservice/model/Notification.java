@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "notifications")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Notification {
