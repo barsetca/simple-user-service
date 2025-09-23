@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,11 +34,15 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public boolean existByUsername(String username) {
+    public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
+
+    public boolean existByEmail(String email) {
+        return userRepository.existsByEmailAndDeletedAtIsNull(email);
+    }
+
 }
