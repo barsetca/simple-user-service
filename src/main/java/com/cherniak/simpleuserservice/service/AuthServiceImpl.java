@@ -5,6 +5,7 @@ import com.cherniak.simpleuserservice.dto.AuthRequest;
 import com.cherniak.simpleuserservice.dto.AuthResponse;
 import com.cherniak.simpleuserservice.dto.RegisterRequest;
 import com.cherniak.simpleuserservice.dto.UserDto;
+import com.cherniak.simpleuserservice.exception.AlreadyExistsException;
 import com.cherniak.simpleuserservice.mapper.UserMapper;
 import com.cherniak.simpleuserservice.model.User;
 import com.cherniak.simpleuserservice.model.enums.Role;
@@ -39,10 +40,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserDto register(RegisterRequest registerRequest) {
         if (userService.existsByUsername(registerRequest.username())) {
-            throw new RuntimeException("Username already exists");
+            throw new AlreadyExistsException("Username already exists");
         }
         if (userService.existByEmail(registerRequest.email())) {
-            throw new RuntimeException("Email already exists");
+            throw new AlreadyExistsException("Email already exists");
         }
         User user = userMapper.toEntity(registerRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));

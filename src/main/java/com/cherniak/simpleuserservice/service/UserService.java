@@ -3,8 +3,6 @@ package com.cherniak.simpleuserservice.service;
 import com.cherniak.simpleuserservice.model.User;
 import com.cherniak.simpleuserservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-
-
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,7 +36,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
+        return userRepository.existsByUsernameAndDeletedAtIsNull(username);
     }
 
     public boolean existByEmail(String email) {
