@@ -1,0 +1,7 @@
+package com.cherniak.simpleuserservice.exception;
+
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
+        super(message);
+    }
+}

@@ -24,7 +24,7 @@ public class JwtUtil {
     @Value("${jwt.lifetime}")
     private long tokenLifetime;
 
-    //todo When make second service, change Algorithm.HMAC256 to RS256
+    //todo When make second service, change Algorithm.HMAC256 to RSA256
     public String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
         return JWT.create()
                 .withSubject(username)
