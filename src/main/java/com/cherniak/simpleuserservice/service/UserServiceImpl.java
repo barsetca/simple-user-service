@@ -1,6 +1,7 @@
 package com.cherniak.simpleuserservice.service;
 
 import com.cherniak.simpleuserservice.dto.UserDto;
+import com.cherniak.simpleuserservice.dto.UserInfo;
 import com.cherniak.simpleuserservice.exception.NotFoundException;
 import com.cherniak.simpleuserservice.mapper.UserMapper;
 import com.cherniak.simpleuserservice.model.User;
@@ -44,6 +45,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsernameAndDeletedAtIsNull(username);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public UserInfo findUserInfoById(Long id) {
+        return userRepository.findUserInfoById(id)
+                .orElseThrow(() -> new NotFoundException("Not found user with userId = " + id));
     }
 
     public boolean existByEmail(String email) {

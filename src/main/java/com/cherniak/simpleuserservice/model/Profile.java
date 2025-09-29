@@ -2,7 +2,10 @@ package com.cherniak.simpleuserservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.Array2DHashSet;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -36,5 +39,13 @@ public class Profile {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.user = user;
+    }
+
+    public void addAddress(ProfileAddress address) {
+        if (this.profileAddresses == null) {
+            profileAddresses = new HashSet<>();
+        }
+        profileAddresses.add(address);
+        address.setProfile(this);
     }
 }

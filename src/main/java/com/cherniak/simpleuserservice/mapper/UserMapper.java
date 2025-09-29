@@ -5,7 +5,7 @@ import com.cherniak.simpleuserservice.dto.UserDto;
 import com.cherniak.simpleuserservice.model.User;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProfileMapper.class})
 public interface UserMapper {
     UserDto toDto(User user);
 
