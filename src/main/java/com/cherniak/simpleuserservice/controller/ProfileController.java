@@ -16,9 +16,14 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<ProfileDto> getByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(profileService.getByUserId(userId));
+    }
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<ProfileDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(profileService.getById(id));
     }
 
     @PostMapping("/profile")

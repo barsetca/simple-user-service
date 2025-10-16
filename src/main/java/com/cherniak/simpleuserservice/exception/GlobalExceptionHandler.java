@@ -1,12 +1,10 @@
 package com.cherniak.simpleuserservice.exception;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,9 +16,17 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ProblemDetail handleValueExists(AlreadyExistsException ex) {
+    public ProblemDetail handleValueExistsEx(AlreadyExistsException ex) {
         ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         detail.setTitle("Already exists value exception");
+        detail.setDetail(ex.getMessage());
+        return detail;
+    }
+
+    @ExceptionHandler(EmptyListException.class)
+    public ProblemDetail handleEmptyListEx(EmptyListException ex) {
+        ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        detail.setTitle("Empty list exception");
         detail.setDetail(ex.getMessage());
         return detail;
     }
