@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    @Query("SELECT n FROM Notification n JOIN UserNotification un ON n.id = un.notification.id AND (n.sender.id = :id OR un.recipient.id = :id)")
-    Page<Notification> findAll(Pageable pageable, @Param("id") Long id);
+    @Query("SELECT n FROM Notification n JOIN UserNotification un ON n.id = un.notification.id AND (n.sender.username = :username OR un.recipient.username = :username)")
+    Page<Notification> findAll(Pageable pageable, @Param("username") String username);
 }

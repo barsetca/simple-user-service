@@ -1,6 +1,7 @@
 package com.cherniak.simpleuserservice.controller;
 
-import com.cherniak.simpleuserservice.dto.NotificationDto;
+import com.cherniak.simpleuserservice.dto.NotificationRequestDto;
+import com.cherniak.simpleuserservice.dto.NotificationResponseDto;
 import com.cherniak.simpleuserservice.service.NotificationService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -21,18 +22,18 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Valid NotificationDto dto) {
+    public ResponseEntity<String> create(@RequestBody @Valid NotificationRequestDto dto) {
         notificationService.create(dto);
         return ResponseEntity.ok("Notification created successfully");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NotificationDto> getById(@PathVariable @Positive Long id) {
+    public ResponseEntity<NotificationResponseDto> getById(@PathVariable @Positive Long id) {
         return ResponseEntity.ok(notificationService.getById(id));
     }
 
     @GetMapping
-    public ResponseEntity<Page<NotificationDto>> getAllByUser(Pageable pageable, Principal principal) {
+    public ResponseEntity<Page<NotificationResponseDto>> getAllByUser(Pageable pageable, Principal principal) {
         return ResponseEntity.ok(notificationService.getPageByUser(pageable, principal.getName()));
     }
 }

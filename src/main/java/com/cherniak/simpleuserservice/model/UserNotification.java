@@ -1,7 +1,6 @@
 package com.cherniak.simpleuserservice.model;
 
 import com.cherniak.simpleuserservice.model.enums.NotificationState;
-import com.cherniak.simpleuserservice.model.enums.UserNotificationRole;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "user_notifications", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"recipient_id", "notification_id", "role"})
+        @UniqueConstraint(columnNames = {"recipient_id", "notification_id"})
 })
 @Getter
 @Setter
@@ -29,10 +28,6 @@ public class UserNotification {
     @EqualsAndHashCode.Include
     private User recipient;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserNotificationRole role;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "notification_id", nullable = false)
     private Notification notification;
@@ -44,9 +39,8 @@ public class UserNotification {
     @Column(name = "read_at")
     private Instant readAt;
 
-    public UserNotification(User recipient, UserNotificationRole role, Notification notification) {
+    public UserNotification(User recipient, Notification notification) {
         this.recipient = recipient;
-        this.role = role;
         this.notification = notification;
     }
 }

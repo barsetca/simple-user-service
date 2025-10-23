@@ -1,13 +1,14 @@
 package com.cherniak.simpleuserservice.service;
 
-import com.cherniak.simpleuserservice.dto.NotificationDto;
+import com.cherniak.simpleuserservice.dto.NotificationRequestDto;
+import com.cherniak.simpleuserservice.dto.NotificationResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface NotificationService {
-    void create(NotificationDto notification);
+    void create(NotificationRequestDto notification);
 
-    NotificationDto getById(Long id);
+    NotificationResponseDto getById(Long id);
 
-    Page<NotificationDto> getPageByUser(Pageable pageable, String username);
+    Page<NotificationResponseDto> getPageByUser(Pageable pageable, String username);
 }

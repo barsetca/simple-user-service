@@ -1,5 +1,6 @@
 package com.cherniak.simpleuserservice.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -61,8 +62,8 @@ public class GlobalExceptionHandler {
         return detail;
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ProblemDetail handleNotFoundEx(NotFoundException ex) {
+    @ExceptionHandler({NotFoundException.class, EntityNotFoundException.class})
+    public ProblemDetail handleNotFoundEx(RuntimeException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 

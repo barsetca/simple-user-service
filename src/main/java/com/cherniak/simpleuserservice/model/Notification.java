@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.Instant;
@@ -33,12 +35,17 @@ public class Notification {
     @Length(max = 2_000)
     private String message;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     @EqualsAndHashCode.Include
     private User sender;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserNotificationRole role;
+
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<UserNotification> userNotifications;
 
     @Column(name = "created_at")
@@ -52,11 +59,11 @@ public class Notification {
         this.userNotifications = userNotifications;
     }
 
-    public void addUserNotification(User user, UserNotificationRole userNotificationRole) {
+    public void addUserNotification(User user) {
         if (this.userNotifications == null) {
             this.userNotifications = new HashSet<>();
         }
-        UserNotification userNotification = new UserNotification(user, userNotificationRole, this);
+        UserNotification userNotification = new UserNotification(user, this);
         userNotification.setState(NotificationState.SENT);
         userNotifications.add(userNotification);
     }
