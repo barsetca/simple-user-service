@@ -36,8 +36,8 @@ public class UserNotification {
     @Column(nullable = false)
     private NotificationState state;
 
-    @Column(name = "read_at")
-    private Instant readAt;
+    @Column(name = "modified_at")
+    private Instant modifiedAt;
 
     public UserNotification(User recipient, Notification notification) {
         this.recipient = recipient;

@@ -10,5 +10,7 @@ public interface NotificationService {
 
     NotificationResponseDto getById(Long id);
 
+    void markRead(Long notificationId, String username);
+
     Page<NotificationResponseDto> getPageByUser(Pageable pageable, String username);
 }

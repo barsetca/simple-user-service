@@ -8,8 +8,10 @@ import com.cherniak.simpleuserservice.exception.NotFoundException;
 import com.cherniak.simpleuserservice.mapper.NotificationMapper;
 import com.cherniak.simpleuserservice.mapper.UserNotificationMapper;
 import com.cherniak.simpleuserservice.model.Notification;
+import com.cherniak.simpleuserservice.model.enums.NotificationState;
 import com.cherniak.simpleuserservice.model.enums.UserNotificationRole;
 import com.cherniak.simpleuserservice.repository.NotificationRepository;
+import com.cherniak.simpleuserservice.repository.UserNotificationRepository;
 import com.cherniak.simpleuserservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +33,8 @@ public class NotificationServiceImpl implements NotificationService {
     private final UserRepository userRepository;
     private final NotificationMapper notificationMapper;
     private final UserNotificationMapper userNotificationMapper;
+
+    private final UserNotificationRepository userNotificationRepository;
 
     @Override
     public void create(NotificationRequestDto dto) {
@@ -69,13 +74,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    public void markRead(Long notificationId, String username) {
+        userNotificationRepository.setState(NotificationState.READ, Instant.now(), notificationId, username);
+    }
+
+    @Override
     public Page<NotificationResponseDto> getPageByUser(Pageable pageable, String username) {
         return notificationRepository.findAll(pageable, username).map(notification -> {
-            System.out.println("//////////////////// after select");
             NotificationResponseDto responseDto = notificationMapper.toDto(notification);
-            System.out.println("//////////////////// after NotificationResponseDto");
             List<UserNotificationDto> userNotificationDtos = notification.getUserNotifications().stream().map(userNotificationMapper::toDto).toList();
-            System.out.println("//////////////////// after Recipients");
             responseDto.setRecipients(userNotificationDtos);
             return responseDto;
         });

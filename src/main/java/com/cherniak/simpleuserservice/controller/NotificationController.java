@@ -36,4 +36,10 @@ public class NotificationController {
     public ResponseEntity<Page<NotificationResponseDto>> getAllByUser(Pageable pageable, Principal principal) {
         return ResponseEntity.ok(notificationService.getPageByUser(pageable, principal.getName()));
     }
+
+    @PatchMapping("/read/{id}")
+    public ResponseEntity<String> markRead(@PathVariable Long id, Principal principal) {
+        notificationService.markRead(id, principal.getName());
+        return ResponseEntity.ok("Notification marked successfully");
+    }
 }
