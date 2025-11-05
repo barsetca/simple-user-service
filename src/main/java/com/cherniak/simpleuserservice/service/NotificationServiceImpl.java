@@ -75,7 +75,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void markRead(Long notificationId, String username) {
-        userNotificationRepository.setState(NotificationState.READ, Instant.now(), notificationId, username);
+        int countModifiers = userNotificationRepository.setState(NotificationState.READ, Instant.now(), notificationId, username);
+        System.out.println("/////////////////// countModifiers = " + countModifiers);
+        if (countModifiers < 1) {
+            throw new NotFoundException("Not found notification with id = " + notificationId);
+        }
     }
 
     @Override

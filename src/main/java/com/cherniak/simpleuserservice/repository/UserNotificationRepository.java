@@ -15,5 +15,5 @@ public interface UserNotificationRepository extends JpaRepository<UserNotificati
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE UserNotification un SET un.state= :state, un.modifiedAt= :modifiedAt WHERE un.notification.id= :notificationId AND un.recipient.username= :username")
-    void setState(@Param("state") NotificationState state, @Param("modifiedAt") Instant modifiedAt, @Param("notificationId") Long notificationId, @Param("username") String username);
+    int setState(@Param("state") NotificationState state, @Param("modifiedAt") Instant modifiedAt, @Param("notificationId") Long notificationId, @Param("username") String username);
 }
